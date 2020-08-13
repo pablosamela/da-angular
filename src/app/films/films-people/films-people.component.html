@@ -7,7 +7,7 @@
     <da-loader></da-loader>
     <div class="row no-gutters" *ngIf="(people$ | async) as people">
 
-      <div class="col text-center m-5"  *ngIf="people === 0">
+      <div class="col text-center m-5" *ngIf="!people?.length">
         <div class="alert alert-warning col" role="alert">
           Sorry! no record match your criteria yet.
         </div>
