@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+$primary: #000000
+$secondary: #272b30
+$yellow: #FFE81F
+
+@import "node_modules/bootstrap/scss/bootstrap"
+
+body, .opening-crawl
+  background: #272b30 url('assets/img/background.png') no-repeat center center fixed
+  background-size: cover
+
+.opening-crawl 
+  .mat-dialog-container
+    background: none 
+    overflow: hidden
+    border: 3px solid $yellow
+
+.btn
+  color: $yellow
+
+.logo
+  width: 150px

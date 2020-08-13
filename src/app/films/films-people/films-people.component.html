@@ -1,0 +1,55 @@
+<div class="card" *ngIf="film$ | async as film">
+  <div class="card-header">
+    <da-header title="People of {{ film.title }}" active="people"></da-header>
+  </div>
+  <div class="card-body p-0">
+    <da-filters></da-filters>
+    <da-loader></da-loader>
+    <div class="row no-gutters" *ngIf="(people$ | async) as people">
+
+      <div class="col text-center m-5"  *ngIf="people === 0">
+        <div class="alert alert-warning col" role="alert">
+          Sorry! no record match your criteria yet.
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4 " *ngFor="let person of people">
+        <div class="card m-3 d-flex align-items-stretch">
+          <h5 class="card-header">{{ person.name }}</h5>
+          <div class="card-body">
+            Eye Color: {{ person.eye_color }}<br />
+            Gender: {{ person.gender }}
+          </div>
+          <div class="card-footer text-muted">
+            <da-films-widget [url]="person.url"></da-films-widget>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-footer text-center" *ngIf="(peoplePager$ | async) as peoplePager">
+        <div class="d-flex justify-content-center">
+
+          <div class="mx-3" *ngIf="peoplePager.previous">
+            <a [routerLink]="['/films','people', film.url | getIdFromUrl , peoplePager.previous]" class="btn btn-sm btn-dark">
+              Previous
+            </a>
+          </div>
+          <div class="badge badge-secondary p-2 mx-3" *ngIf="peoplePager.pagesCount">
+            page {{ peoplePager.page }} of {{ peoplePager.pagesCount }}
+           </div>
+          <div class="badge badge-secondary p-2 mx-3" *ngIf="peoplePager.count">
+           Found {{ peoplePager.count }} results
+          </div>
+          <div class="mx-3" *ngIf="peoplePager.next <= peoplePager.pagesCount ">
+            <a [routerLink]="['/films','people', film.url | getIdFromUrl , peoplePager.next]" class="btn btn-sm btn-dark">
+              Next
+            </a>
+          </div>
+
+        </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="card">
+  <div class="card-header">
+    <da-header title="Films"></da-header>
+  </div>
+  <div class="card-body p-0">
+    <da-loader></da-loader>
+    <div class="row no-gutters" *ngIf="films$ | async as films">
+      <div class="col col-sm-6 col-md-4 align-self-stretch" *ngFor="let film of films">
+        <div class="card m-3">
+          <img
+            src="assets/img/films/{{ film.url | getIdFromUrl }}.jpg"
+            class="card-img-top"
+            alt="{{ film.title }}"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              <da-opening-crawl-link [film]="film"></da-opening-crawl-link>
+            </h5>
+            <p class="card-text">
+              Episode: {{ film.episode_id }}<br>
+              Director: {{ film.director }}
+            </p>
+            <div class="text-center">
+              <a class="btn btn-primary" [routerLink]="['people',film.url | getIdFromUrl,'1']">Characters</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

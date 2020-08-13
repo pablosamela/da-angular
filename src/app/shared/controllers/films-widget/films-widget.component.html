@@ -1,0 +1,4 @@
+<h6>Films</h6>
+<div class="mx-1" *ngFor="let film of films$ | async">
+  <da-opening-crawl-link [film]="film"></da-opening-crawl-link>
+</div>

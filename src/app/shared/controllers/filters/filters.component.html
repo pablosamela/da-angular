@@ -1,0 +1,27 @@
+<form [formGroup]="filtersGroup">
+  <div class="row m-2">
+
+    <div class="col-12 col-md-3 my-1" *ngIf="eyeFilter$ | async as eyeFilter">
+      <select formControlName="eyeColor" class="form-control form-control-sm" id="eyeFilter" (change)="onEyeColorChange($event)">
+        <option value="">Select an eye Color</option>
+        <option *ngFor="let eye of eyeFilter" [value]="eye">{{ eye }}</option>
+      </select>
+    </div>
+
+    <div class="col-12 col-md-3 my-1" *ngIf="genderFilter$ | async as genderFilter">
+      <select formControlName="gender" class="form-control form-control-sm" id="genderFilter" (change)="onGenderChange($event)">
+        <option value="">Select a gender</option>
+        <option *ngFor="let gender of genderFilter" [value]="gender">{{ gender }}</option>
+      </select>
+    </div>
+    <div class="col-12 col-md-3 my-1" *ngIf="filmsFilter$ | async as filmsFilter">
+      <select formControlName="films" class="form-control form-control-sm" id="filmsFilter"  (change)="onFilmsChange($event)">
+        <option value="">Select a film</option>
+        <option *ngFor="let film of filmsFilter" [value]="film.url">{{ film.title }}</option>
+        </select>
+    </div>
+    <div class="col-12 col-md-2 my-1 text-center">
+      <button (click)="onClearClick()" type="reset" class="btn btn-sm btn-primary mx-2">Clear</button>
+    </div>
+  </div>
+</form>
