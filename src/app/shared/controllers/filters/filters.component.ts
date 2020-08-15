@@ -47,6 +47,7 @@ export class FiltersComponent implements OnInit {
     this.store.dispatch(savePeoplePager({
       peoplePager: {
         ...this.peoplePager,
+        page: 1,
         filters: this.selectedFilters
       }
     }));

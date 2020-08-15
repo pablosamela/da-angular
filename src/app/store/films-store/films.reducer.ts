@@ -35,11 +35,15 @@ const filmsReducer = createReducer(
 		};
 	}),
 	on(loadFilmPeopleSuccess, (state, payload) => {
-		const startingNumber = (payload.peoplePager.page - 1) * payload.peoplePager.amountPerPpage;
-		const startPlusAmount = startingNumber + payload.peoplePager.amountPerPpage;
-		const endingNumber = (startPlusAmount <= payload.people.length) ? startPlusAmount : payload.people.length;
-		const pagesCount = Math.ceil(payload.people.length / payload.peoplePager.amountPerPpage);
-		
+		const amountPerPpage = payload.peoplePager.amountPerPpage;
+		const page = payload.peoplePager.page;
+		const count = payload.people.length;
+
+		const startingNumber = (page - 1) * amountPerPpage;
+		const startPlusAmount = startingNumber + amountPerPpage;
+		const endingNumber = (startPlusAmount <= count) ? startPlusAmount : count;
+		const pagesCount = Math.ceil(count / amountPerPpage);
+
 		return {
 			...state,
 			people: payload.people,
@@ -47,29 +51,33 @@ const filmsReducer = createReducer(
 			filteredPeople: payload.people.slice(startingNumber, endingNumber),
 			peoplePager: {
 				...payload.peoplePager,
-				next: payload.peoplePager.page < pagesCount ? payload.peoplePager.page + 1 : 0,
-				previous: payload.peoplePager.page > 0 ? payload.peoplePager.page - 1 : 0,
+				next: page < pagesCount ? page + 1 : 0,
+				previous: page > 0 ? page - 1 : 0,
 				pagesCount,
-				count: payload.people.length
+				count
 			},
 			isLoading: payload.isLoading,
 		};
 	}),
 	on(loadFilteredPeopleSuccess, (state, payload) => {
-		const startingNumber = (payload.peoplePager.page - 1) * payload.peoplePager.amountPerPpage;
-		const startPlusAmount = startingNumber + payload.peoplePager.amountPerPpage;
-		const endingNumber = (startPlusAmount <= payload.filteredPeople.length) ? startPlusAmount : payload.filteredPeople.length;
-		const pagesCount = Math.ceil(payload.filteredPeople.length / payload.peoplePager.amountPerPpage);
+		const amountPerPpage = payload.peoplePager.amountPerPpage;
+		const page = payload.peoplePager.page;
+		const count = payload.filteredPeople.length;
+
+		const startingNumber = (page - 1) * amountPerPpage;
+		const startPlusAmount = startingNumber + amountPerPpage;
+		const endingNumber = (startPlusAmount <= count) ? startPlusAmount : count;
+		const pagesCount = Math.ceil(count / amountPerPpage);
 
 		return {
 			...state,
 			filteredPeople: payload.filteredPeople.slice(startingNumber, endingNumber),
 			peoplePager: {
 				...payload.peoplePager,
-				next: payload.peoplePager.page < pagesCount ? payload.peoplePager.page + 1 : 0,
-				previous: payload.peoplePager.page > 0 ? payload.peoplePager.page - 1 : 0,
+				next: page < pagesCount ? page + 1 : 0,
+				previous: page > 0 ? page - 1 : 0,
 				pagesCount,
-				count: payload.filteredPeople.length
+				count
 			},
 			isLoading: payload.isLoading
 		};
