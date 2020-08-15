@@ -10,53 +10,28 @@ import { selectCurrentFilm, selectFilmsAndPeopleLength, selectFiteredPeople, sel
 import { loadFilmPeople, loadFilteredPeople, loader } from 'src/app/store/films-store/films.actions';
 import { IPager } from 'src/app/store/films-store/films.state';
 import { IStoreState } from 'src/app/store/store.state';
+import { LogicService } from 'src/app/services/logic.service';
 
 @Component({
   selector: 'da-films-people',
   templateUrl: './films-people.component.html'
 })
 export class FilmsPeopleComponent implements OnInit {
-  filmId: number;
-  page: number;
-  peoplePager$: Observable<IPager> = this.store.pipe(select(selectPeoplePager));
-
   people$: Observable<IPeople[]> = this.store.pipe(select(selectFiteredPeople));
-  film$: Observable<IFilm> = this.store.pipe(select(selectCurrentFilm), take(1));
+  film$: Observable<IFilm> = this.store.pipe(select(selectCurrentFilm));
 
-  constructor(private route: ActivatedRoute, private store: Store<IStoreState>, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private store: Store<IStoreState>, 
+    private logisService: LogicService
+    ) { }
 
   ngOnInit(): void {
     this.route.url.subscribe(() => {
-      this.filmId = Number(this.route.snapshot.paramMap.get('id'));
-      this.page = Number(this.route.snapshot.paramMap.get('page'));
       this.store.dispatch(loader({ isLoading: true }));
-
-      combineLatest([
-        this.store.pipe(select(selectFilmsAndPeopleLength), take(1)),
-        this.store.pipe(select(selectPeoplePager), take(1))
-      ]).pipe(
-        map(([has, peoplePager]) => {
-          if (has.films) {
-            if (has.people) {
-              this.store.dispatch(loadFilteredPeople({
-                peoplePager: {
-                  ...peoplePager,
-                  page: this.page
-                }
-              }));
-            } else {
-              this.store.dispatch(loadFilmPeople({
-                peoplePager: {
-                  ...peoplePager,
-                  film: this.filmId,
-                  page: this.page
-                }
-              }));
-            }
-          } else {
-            this.router.navigateByUrl('/');
-          }
-        })
+      this.logisService.init(
+        Number(this.route.snapshot.paramMap.get('page')), 
+        Number(this.route.snapshot.paramMap.get('id'))
       ).subscribe();
     });
   }

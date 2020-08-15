@@ -30,10 +30,6 @@ export class FiltersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.eyeFilter$ 
-    this.genderFilter$;
-    this.filmsFilter$ ;
-
     this.store.pipe(select(selectPeoplePager), take(1))
     .subscribe(peoplePager => {
       this.peoplePager = peoplePager;

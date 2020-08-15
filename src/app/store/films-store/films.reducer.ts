@@ -35,19 +35,42 @@ const filmsReducer = createReducer(
 		};
 	}),
 	on(loadFilmPeopleSuccess, (state, payload) => {
+		const startingNumber = (payload.peoplePager.page - 1) * payload.peoplePager.amountPerPpage;
+		const startPlusAmount = startingNumber + payload.peoplePager.amountPerPpage;
+		const endingNumber = (startPlusAmount <= payload.people.length) ? startPlusAmount : payload.people.length;
+		const pagesCount = Math.ceil(payload.people.length / payload.peoplePager.amountPerPpage);
+		
 		return {
 			...state,
 			people: payload.people,
-			filteredPeople: payload.filteredPeople,
-			peoplePager: payload.peoplePager,
-			isLoading: payload.isLoading
+			films: payload.films,
+			filteredPeople: payload.people.slice(startingNumber, endingNumber),
+			peoplePager: {
+				...payload.peoplePager,
+				next: payload.peoplePager.page < pagesCount ? payload.peoplePager.page + 1 : 0,
+				previous: payload.peoplePager.page > 0 ? payload.peoplePager.page - 1 : 0,
+				pagesCount,
+				count: payload.people.length
+			},
+			isLoading: payload.isLoading,
 		};
 	}),
 	on(loadFilteredPeopleSuccess, (state, payload) => {
+		const startingNumber = (payload.peoplePager.page - 1) * payload.peoplePager.amountPerPpage;
+		const startPlusAmount = startingNumber + payload.peoplePager.amountPerPpage;
+		const endingNumber = (startPlusAmount <= payload.filteredPeople.length) ? startPlusAmount : payload.filteredPeople.length;
+		const pagesCount = Math.ceil(payload.filteredPeople.length / payload.peoplePager.amountPerPpage);
+
 		return {
 			...state,
-			filteredPeople: payload.filteredPeople,
-			peoplePager: payload.peoplePager,
+			filteredPeople: payload.filteredPeople.slice(startingNumber, endingNumber),
+			peoplePager: {
+				...payload.peoplePager,
+				next: payload.peoplePager.page < pagesCount ? payload.peoplePager.page + 1 : 0,
+				previous: payload.peoplePager.page > 0 ? payload.peoplePager.page - 1 : 0,
+				pagesCount,
+				count: payload.filteredPeople.length
+			},
 			isLoading: payload.isLoading
 		};
 	})

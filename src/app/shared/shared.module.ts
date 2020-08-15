@@ -10,6 +10,7 @@ import { OpeningCrawlLinkComponent } from './controllers/opening-crawl-link/open
 import { FiltersComponent } from './controllers/filters/filters.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoaderComponent } from './controllers/loader/loader.component';
+import { PagerComponent } from './controllers/pager/pager.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { LoaderComponent } from './controllers/loader/loader.component';
     OpeningCrawlLinkComponent,
     FilmsWidgetComponent,
     FiltersComponent,
-    LoaderComponent
+    LoaderComponent,
+    PagerComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import { LoaderComponent } from './controllers/loader/loader.component';
     OpeningCrawlLinkComponent,
     FilmsWidgetComponent,
     FiltersComponent,
-    LoaderComponent
+    LoaderComponent,
+    PagerComponent
   ]
 })
 export class SharedModule { }

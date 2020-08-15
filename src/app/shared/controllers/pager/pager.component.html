@@ -1,0 +1,19 @@
+<div class="card-footer text-center" *ngIf="(peoplePager$ | async) as peoplePager">
+  <div class="d-flex justify-content-center">
+
+    <div class="mx-3" *ngIf="peoplePager.previous">
+      <a [routerLink]="['/films','people', peoplePager.film , peoplePager.previous]" class="btn btn-sm btn-dark">
+        Previous
+      </a>
+    </div>
+    <div class="badge badge-secondary p-2 mx-3" *ngIf="peoplePager.pagesCount && peoplePager.count">
+        page {{ peoplePager.page }} of {{ peoplePager.pagesCount }}, found {{ peoplePager.count }} results
+    </div>
+    <div class="mx-3" *ngIf="peoplePager.next">
+      <a [routerLink]="['/films','people', peoplePager.film , peoplePager.next]" class="btn btn-sm btn-dark">
+        Next
+      </a>
+    </div>
+
+  </div>
+</div>

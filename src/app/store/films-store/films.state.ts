@@ -16,6 +16,7 @@ export interface IPager {
   film: number;
   count: number;
   pagesCount: number;
+  amountPerPpage:number;
   next: number;
   previous: number;
   filters: IFilters;
@@ -37,6 +38,7 @@ export const initialPeoplePager: IPager = {
   film: 1,
   count: 1,
   pagesCount: 1,
+  amountPerPpage: 10,
   next: 2,
   previous: 0,
   filters: initialFilterState

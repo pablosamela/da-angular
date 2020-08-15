@@ -25,7 +25,7 @@ export const loadFilmPeople = createAction(
 
 export const loadFilmPeopleSuccess = createAction(
   '[People] Load Films People Success',
-  props<{ people: IPeople[], filteredPeople: IPeople[], peoplePager: IPager, isLoading: boolean }>()
+  props<{ films: IFilm[], people: IPeople[], peoplePager: IPager, isLoading: boolean }>()
 );
 
 export const loadFilteredPeople = createAction(

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { IStoreState } from 'src/app/store/store.state';
 import { selectLoader } from 'src/app/store/films-store/films.selectors';
@@ -8,13 +8,10 @@ import { Observable } from 'rxjs';
   selector: 'da-loader',
   templateUrl: './loader.component.html'
 })
-export class LoaderComponent implements OnInit {
+export class LoaderComponent {
 
   loader$: Observable<boolean> = this.store.pipe(select(selectLoader));
   
   constructor(private store: Store<IStoreState>) { }
-
-  ngOnInit(): void {
-  }
 
 }
